@@ -1,0 +1,16 @@
+<library path="lib/libarm_control">
+
+  <class name="arm_control/JointTrajectoryController" type="arm_control::JointTrajectoryController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      The JointTrajectoryController description.
+    </description>
+  </class>
+</library>
+
+<library path="lib/libarm_control_ctc">
+  <class name="arm_control/CtcJointTrajectoryController" type="arm_control::CtcJointTrajectoryController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      The Computed Torque Control JointTrajectoryController description.
+    </description>
+  </class>
+</library>
