@@ -109,7 +109,7 @@ public:
     {
         if (!joint_handles_ptr) { return; }
         double dt = period.toSec();
-        std::cout<<"dt:"<<dt<<std::endl;
+        std::cout<<"[effort_joint_interface]dt:"<<dt<<std::endl;
 
         for (size_t idx = 0; idx < joint_handles_ptr->size(); ++idx) {
 

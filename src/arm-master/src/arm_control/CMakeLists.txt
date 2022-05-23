@@ -137,7 +137,7 @@ include_directories(include
   ${catkin_INCLUDE_DIRS})
 
   LINK_DIRECTORIES(
-  /home/robot/refer/ws_gazebo_moveit/devel/lib
+  /home/dell1804/refer/ws_gazebo_moveit/devel/lib
 )
 ## Declare a C++ library
 add_library(${PROJECT_NAME}

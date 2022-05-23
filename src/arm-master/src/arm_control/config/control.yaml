@@ -17,5 +17,5 @@ arm_controller:
     toe_foot_joint: {p: 100,  d: 10}
     foot_leg_joint: {p: 100,  d: 10}
     leg_arm_joint: {p: 100,  d: 10}
-    arm_hand_joint: {p: 100,  d: 10}
+    arm_hand_joint: {p: 100,  d: 1}
     hand_finger_joint: {p: 100,  d: 10}

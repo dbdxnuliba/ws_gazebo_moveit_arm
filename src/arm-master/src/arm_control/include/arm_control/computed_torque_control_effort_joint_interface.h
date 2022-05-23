@@ -52,13 +52,51 @@ public:
 
         // Extract chain from KDL tree.
        // KDL::Chain chain;
-        if (!tree.getChain("toe", "finger", kdl_chain_)) {
-            ROS_ERROR("Failed to extract chain from 'toe' to 'finger' in kdl tree");
+
+               // 4.2 kdl chain
+        std::string root_name, tip_name;
+        if (!nh.getParam("root_link", root_name))
+        {
+            ROS_ERROR("Could not find root link name");
             return false;
         }
-        ROS_INFO("Extracted chain from kdl tree");
+        if (!nh.getParam("tip_link", tip_name))
+        {
+            ROS_ERROR("Could not find tip link name");
+            return false;
+        }
 
+        // if (!tree.getChain("toe", "finger", kdl_chain_)) {
+        //     ROS_ERROR("Failed to extract chain from 'toe' to 'finger' in kdl tree");
+        //     return false;
+        // }
 
+        // if (!tree.getChain(root_name, tip_name, kdl_chain_)) {
+        //     ROS_ERROR("Failed to extract chain from 'toe' to 'finger' in kdl tree");
+        //     return false;
+        // }
+        // ROS_INFO("Extracted chain from kdl tree");
+
+        if (!tree.getChain(root_name, tip_name, kdl_chain_))
+        {
+            ROS_ERROR_STREAM("Failed to get KDL chain from tree: ");
+            ROS_ERROR_STREAM("  " << root_name << " --> " << tip_name);
+            ROS_ERROR_STREAM("  Tree has " << tree.getNrOfJoints() << " joints");
+            ROS_ERROR_STREAM("  Tree has " << tree.getNrOfSegments() << " segments");
+            ROS_ERROR_STREAM("  The segments are:");
+
+            KDL::SegmentMap segment_map = tree.getSegments();
+            KDL::SegmentMap::iterator it;
+
+            for (it = segment_map.begin(); it != segment_map.end(); it++)
+                ROS_ERROR_STREAM("    " << (*it).first);
+
+            return false;
+        }
+        else
+        {
+            ROS_INFO("Got kdl chain");
+        }
 
 
 
@@ -93,16 +131,15 @@ public:
         ROS_INFO("Extracted joint effort limits");
 
         // Init inverse dynamics solver.
-        id_rne_solver_.reset(new KDL::ChainIdSolver_RNE(kdl_chain_, KDL::Vector(0, 0, -9.81)));
-        ROS_INFO("Initialized kdl inverse dynamics solver");
-   
-            // 4.3 inverse dynamics solver 초기화
         gravity_ = KDL::Vector::Zero(); // ?
         gravity_(2) = -9.81;            // 0: x-axis 1: y-axis 2: z-axis
 
+        id_rne_solver_.reset(new KDL::ChainIdSolver_RNE(kdl_chain_, gravity_));
+        ROS_INFO("Initialized kdl inverse dynamics solver");
+   
+        // 4.3 inverse dynamics solver 초기화
         id_solver_.reset(new KDL::ChainDynParam(kdl_chain_, gravity_));
         
-
         e_.data = Eigen::VectorXd::Zero(n_joints);
         e_dot_.data = Eigen::VectorXd::Zero(n_joints);
 
@@ -191,7 +228,8 @@ public:
     {
         if (!joint_handles_ptr) { return; }
         double dt = period.toSec();
-        std::cout<<"[ctc] dt:"<<dt<<std::endl;
+        //std::cout<<"[ctc] dt:"<<dt<<std::endl;
+        //std::cout<<"[effort_joint_interface] ctc dt:"<<dt<<std::endl;
 
         for (size_t idx = 0; idx < joint_handles_ptr->size(); ++idx) {
 

@@ -1,0 +1,14 @@
+<launch>
+
+  <!-- Launch the Gazebo simulation -->
+  <include file="$(find arm_gazebo)/launch/empty_world.launch"/>
+
+
+  <!-- Launch the MoveIt! move group -->
+  <include file="$(find arm_control)/launch/moveit.launch"/>
+
+
+  <!-- Launch the joint trajectory controller -->
+  <include file="$(find arm_control)/launch/rviz_computed_torque_control.launch"/>
+
+</launch>

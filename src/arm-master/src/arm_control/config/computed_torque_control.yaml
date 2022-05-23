@@ -19,8 +19,38 @@ computed_torque_controller:
     foot_leg_joint: 
       pid: {p: 30.0, i: 0, d: 4.0}
     leg_arm_joint: 
-      pid: {p: 30.0, i: 0, d: 4.0}
+      pid: {p: 30.0, i: 0, d: 5.7}
     arm_hand_joint: 
       pid: {p: 100.0, i: 0, d: 10.0}
     hand_finger_joint: 
-      pid: {p: 100.0, i: 0, d: 10.0}
+      pid: {p: 30.0, i: 0, d: 10.0}
+  root_link: toe
+  tip_link: finger
+# computed_torque_controller2:
+#       type: arm_controllers/Computed_Torque_Controller
+#       joints:
+#         - joint1
+#         - joint2
+#         - joint3
+#         - joint4
+#         - joint5
+#         - joint6
+#         - joint7
+
+#       gains:
+#         joint1: 
+#           pid: {p: 100.0, i: 0, d: 20.0}
+#         joint2: 
+#           pid: {p: 100.0, i: 0, d: 20.0}
+#         joint3: 
+#           pid: {p: 100.0, i: 0, d: 20.0}
+#         joint4: 
+#           pid: {p: 100.0, i: 0, d: 20.0}
+#         joint5: 
+#           pid: {p: 100.0, i: 0, d: 20.0}
+#         joint6: 
+#           pid: {p: 100.0, i: 0, d: 20.0}
+#         joint7: 
+#           pid: {p: 100.0, i: 0, d: 20.0}
+#       root_link: world
+#       tip_link: flange
